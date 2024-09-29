@@ -6,80 +6,129 @@
     <title>Đám Cưới Của Chúng Tôi</title>
     <style>
         body {
-            font-family: 'Times New Roman', Times, serif;
-            background: url('https://riversidepalace.vn/multidata/18-371.jpg') no-repeat center center fixed; /* Thay đổi đường dẫn đến ảnh background */
-            background-size: cover; /* Đảm bảo ảnh phủ kín màn hình */
+            font-family: Arial, sans-serif;
             text-align: center;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
             margin: 0;
-            color: rgb(0, 0, 0); /* Để chữ nổi bật hơn trên nền */
+            padding: 20px;
+            background-color: #f0f0f0;
         }
 
-        header {
-            margin-bottom: 20px;
-            background-color: rgba(255, 255, 255, 0.7); /* Nền mờ cho header */
-            padding: 20px;
+        .header-image img {
+            width: 100%;
+            max-width: 60px;
+            border-radius: 10px;
+            margin-bottom: 0px;
+        }
+
+        .names {
+            font-size: 20px;
+            color: #000000;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .heart {
+            font-size: 50px;
+            margin: 0 20px;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: #333;
+            margin-top: 10px;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        .slider {
+            position: relative;
+            max-width: 800px;
+            margin: 20px auto;
+            overflow: hidden;
             border-radius: 10px;
         }
 
-        h1 {
-            color: #1b1b1b;
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            position: relative;
+        }
+
+        .slide img {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .slide-caption {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
         }
 
         .couple-info {
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .info-item {
+            margin: 0 20px;
+            text-align: center;
+        }
+
+        .info-item img {
+            width: 250px;
+            border-radius: 10px;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
             margin-top: 20px;
         }
 
-        .bride-info, .groom-info {
-            margin: 0 20px;
+        .image-item {
+            position: relative;
+            margin: 10px;
+            width: calc(33.33% - 20px); /* Ba ảnh mỗi dòng mặc định */
+            cursor: pointer;
         }
 
-        .couple-photo {
-            width: 150px;
-            height: auto;
-            border-radius: 50%;
-            margin-bottom: 10px;
-        }
-
-        .heart {
-            font-size: 40px;
-            color: red;
-            margin: 0 20px;
-        }
-
-        .wedding-date {
-            font-size: 18px;
-            color: #333;
-            margin-top: 10px;
-        }
-
-        section {
-            margin: 20px 0;
+        .image-item img {
             width: 100%;
-            max-width: 600px;
-            background-color: rgba(255, 255, 255, 0.8); /* Nền mờ cho các section */
-            padding: 20px;
             border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .countdown {
+            font-weight: bold;
+            color: #d85d5d;
+            margin: 20px 0;
+            font-size: 20px;
         }
 
         .bank-info-container {
             display: flex;
             justify-content: space-around;
-            margin-bottom: 20px;
+            margin: 20px 0;
         }
 
         .bank-info {
             text-align: left;
-            flex: 1;
-            margin: 0 10px;
         }
 
         .qr-code {
@@ -88,213 +137,314 @@
             margin-top: 10px;
         }
 
-        .image-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .image-container img {
-            width: 100%;
-            max-width: 150px;
-            margin: 10px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .image-container img:hover {
-            transform: scale(1.05);
-        }
-
-        .large-image {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            border-radius: 10px;
-        }
-
-        .large-image img {
-            max-width: 90%;
-            max-height: 90%;
-        }
-
-        .close-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            color: white;
-            cursor: pointer;
-            font-size: 24px;
-        }
-
         footer {
             margin-top: 20px;
             font-size: 14px;
             color: #777;
         }
 
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeIn 1s forwards;
+        /* Modal style */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
         }
 
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 80%;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .couple-info {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .info-item {
+                margin: 10px 0;
+            }
+
+            .bank-info-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .bank-info {
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            .image-item {
+                width: calc(50% - 20px); /* Hai ảnh mỗi dòng trên di động */
             }
         }
 
-        .fade-in-on-scroll {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s, transform 0.5s;
+        @media (min-width: 769px) {
+            .image-item {
+                width: calc(33.33% - 20px); /* Ba ảnh mỗi dòng trên máy tính */
+            }
         }
 
-        .fade-in-on-scroll.visible {
-            opacity: 1;
-            transform: translateY(0);
+        #details {
+            background-color: #c8e6c9; /* Màu nền cho lời nhắn */
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        #about {
+            background-color: #c8e6c9; /* Màu nền cho lời nhắn */
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        #messages {
+            background-color: #c8e6c9; /* Màu nền cho lời nhắn */
+            padding: 20px;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Hãy cùng chia sẻ khoảnh khắc đặc biệt này với chúng tôi!</h1>
-        <div class="couple-info">
-            <div class="bride-info fade-in">
-                <img src="image/a6.jpg" alt="Ảnh Chú Rể" class="couple-photo">
-                <h2>Hoàng Chiến</h2>
-            </div>
-            <div class="heart">&#10084;&#65039;</div>
-            <div class="groom-info fade-in">
-                <img src="image/a5.jpg" alt="Ảnh Cô Dâu" class="couple-photo">
-                <h2>Mai An</h2>
-            </div>
+<div class="header-image">
+    <img src="https://png.pngtree.com/png-clipart/20210606/original/pngtree-lettering-of-happy-wedding-day-with-love-line-vector-png-image_6391270.jpg" alt="Hình ảnh Đám Cưới">
+</div>
+
+<div class="names">
+    Hoàng Chiến <span class="heart">&</span> Mai An
+</div>
+<div class="subtitle">13 - 10 - 2024</div>
+
+<div class="slider">
+    <div class="slides" id="slides">
+        <div class="slide">
+            <img src="image/a4.jpg" alt="Ảnh 1">
+            <div class="slide-caption">Hoàng Chiến & Mai An</div>
         </div>
-        <p class="wedding-date">Ngày cưới: 13 tháng 10, 2024</p>
-    </header>
-
-    <section id="about" class="fade-in-on-scroll">
-        <h2>Chuyện chúng mình</h2>
-        <p>Từ ghét đến yêu, từ chị thành em, từ người dưng thành người thương, từ xa lạ thành người thân. Tất cả đều được dẫn dắt bởi 1 cảm xúc mà chúng mình gọi là "Cảm giác gia đình" ♥</p>
-    </section>
-
-    <section id="details" class="fade-in-on-scroll">
-        <h2>Thông Tin Đám Cưới</h2>
-        <p><strong>Ngày:</strong> 12 tháng 12, 2024</p>
-        <p><strong>Giờ:</strong> 15:00</p>
-        <p><strong>Địa điểm:</strong> Nhà hàng ABC, 123 Đường XYZ, Thành phố</p>
-        <img src="image/a1.jpg" alt="Sự hiện diện của bạn" style="max-width: 100%; height: auto; margin-top: 10px;">
-        <p style="font-weight: bold; margin-top: 10px;">Sự hiện diện của bạn là niềm vinh hạnh của chúng tôi!</p>
-    </section>
-
-    <section id="bank-info" class="fade-in-on-scroll">
-        <h2>Thông Tin Ngân Hàng</h2>
-        <div class="bank-info-container">
-            <div class="bank-info">
-                <p><strong>Cô Dâu:</strong></p>
-                <p><strong>Tên ngân hàng:</strong> Ngân Hàng A</p>
-                <p><strong>Số tài khoản:</strong> 123456789</p>
-                <p><strong>Chủ tài khoản:</strong> Nguyễn Thị Hằng</p>
-                <img src="image/QR.png" alt="QR Code Cô Dâu" class="qr-code">
-            </div>
-            <div class="bank-info">
-                <p><strong>Chú Rể:</strong></p>
-                <p><strong>Tên ngân hàng:</strong> Ngân Hàng B</p>
-                <p><strong>Số tài khoản:</strong> 987654321</p>
-                <p><strong>Chủ tài khoản:</strong> Trần Văn Đạt</p>
-                <img src="image/QR.png" alt="QR Code Chú Rể" class="qr-code">
-            </div>
+        <div class="slide">
+            <img src="image/a7.jpg" alt="Ảnh 2">
+            <div class="slide-caption">Hoàng Chiến & Mai An</div>
         </div>
-    </section>
-
-    <section id="album" class="fade-in-on-scroll">
-        <h2>Album Ảnh</h2>
-        <div class="image-container" id="imageContainer">
-            <img src="image/a3.jpg" alt="Ảnh 1" onclick="showLargeImage(this.src)">
-            <img src="image/a4.jpg" alt="Ảnh 2" onclick="showLargeImage(this.src)">
-            <img src="image/a5.jpg" alt="Ảnh 3" onclick="showLargeImage(this.src)">
-            <img src="image/a6.jpg" alt="Ảnh 4" onclick="showLargeImage(this.src)">
-            <img src="image/a7.jpg" alt="Ảnh 5" onclick="showLargeImage(this.src)">
+        <div class="slide">
+            <img src="image/a4.jpg" alt="Ảnh 3">
+            <div class="slide-caption">Hoàng Chiến & Mai An</div>
         </div>
-    </section>
-
-    <section id="messages">
-        <h2>Lời Nhắn Từ Cặp Đôi</h2>
-        <div id="messageContainer"></div>
-    </section>
-
-    <footer>
-        <p>&copy; Thiết kế bởi Panbap. Tất cả các quyền được bảo lưu.</p>
-    </footer>
-
-    <div class="large-image" id="largeImage">
-        <span class="close-button" onclick="closeLargeImage()">✖</span>
-        <img id="fullImage" src="" alt="Ảnh Lớn">
     </div>
+</div>
 
-    <script>
-        const messages = [
-            "Cảm ơn các bạn đã đến tham dự đám cưới của chúng tôi!",
-            "Chúng tôi rất vui khi được chia sẻ khoảnh khắc này cùng mọi người.",
-            "Hãy cùng nhau tạo nên những kỷ niệm đẹp!",
-            "Xin chúc mọi người sức khỏe và hạnh phúc!"
-        ];
+<section id="details">
+    <h2>Thiệp mời</h2>
+    <p>Trân trọng kính mời</p>
+    <img src="image/a1.jpg" alt="Sự hiện diện của bạn" style="max-width: 100%; height: auto; margin-top: 10px;">
+    <div class="countdown" id="countdown"></div>
+    <p><strong>Ngày:</strong> 12 tháng 12, 2024</p>
+    <p><strong>Địa điểm:</strong> Nhà hàng ABC, 123 Đường XYZ, Thành phố</p>
+    <p style="font-weight: bold; margin-top: 10px;">Sự hiện diện của bạn là niềm vinh hạnh của chúng tôi!</p>
+</section>
 
-        let index = 0;
+<div>
+    <h2>Cô dâu & chú rể</h2>
+    <p>Tình yêu của chúng tôi</p>
 
-        function showMessage() {
-            const messageContainer = document.getElementById('messageContainer');
-            messageContainer.innerText = messages[index];
-            index++;
+    <div class="couple-info">
+        <div class="info-item">
+            <img src="image/a5.jpg" alt="Cô Dâu">
+            <p><strong>Mai An</strong></p>
+            <p>Lời muốn nói: "Cảm ơn mọi người đã đến!"</p>
+        </div>
+        <div class="info-item">
+            <img src="image/a6.jpg" alt="Chú Rể">
+            <p><strong>Hoàng Chiến</strong></p>
+            <p>Lời muốn nói: "Chúng tôi rất vui mừng!"</p>
+        </div>
+    </div>
+</div>
 
-            if (index === messages.length) {
-                index = 0; // Reset chỉ số
-            }
+<section id="about">
+    <h2>Chuyện chúng mình</h2>
+    <p>Từ ghét đến yêu, từ chị thành em, từ người dưng thành người thương, từ xa lạ thành người thân. Tất cả đều được dẫn dắt bởi 1 cảm xúc mà chúng mình gọi là tình yêu. ❤️</p>
+</section>
+
+<section id="album">
+    <h2>Album Ảnh</h2>
+    <div class="image-container">
+        <div class="image-item" onclick="openModal(0)">
+            <img src="image/a3.jpg" alt="Ảnh 1">
+        </div>
+        <div class="image-item" onclick="openModal(1)">
+            <img src="image/a4.jpg" alt="Ảnh 2">
+        </div>
+        <div class="image-item" onclick="openModal(2)">
+            <img src="image/a5.jpg" alt="Ảnh 3">
+        </div>
+        <div class="image-item" onclick="openModal(3)">
+            <img src="image/a6.jpg" alt="Ảnh 4">
+        </div>
+        <div class="image-item" onclick="openModal(4)">
+            <img src="image/a7.jpg" alt="Ảnh 5">
+        </div>
+        <div class="image-item" onclick="openModal(5)">
+            <img src="image/a4.jpg" alt="Ảnh 6">
+        </div>
+    </div>
+</section>
+
+<section id="bank-info">
+    <h2>Thông Tin Ngân Hàng</h2>
+    <div class="bank-info-container">
+        <div class="bank-info">
+            <p><strong>Cô Dâu:</strong></p>
+            <p><strong>Tên ngân hàng:</strong> Ngân Hàng A</p>
+            <p><strong>Số tài khoản:</strong> 123456789</p>
+            <p><strong>Chủ tài khoản:</strong> Nguyễn Thị Hằng</p>
+            <img src="image/QR.png" alt="QR Code Cô Dâu" class="qr-code">
+        </div>
+        <div class="bank-info">
+            <p><strong>Chú Rể:</strong></p>
+            <p><strong>Tên ngân hàng:</strong> Ngân Hàng B</p>
+            <p><strong>Số tài khoản:</strong> 987654321</p>
+            <p><strong>Chủ tài khoản:</strong> Trần Văn Đạt</p>
+            <img src="image/QR.png" alt="QR Code Chú Rể" class="qr-code">
+        </div>
+    </div>
+</section>
+
+<section id="messages">
+    <h2>Lời Nhắn Từ Cặp Đôi</h2>
+    <div id="messageContainer"></div>
+</section>
+
+<footer>
+    <p>&copy; Thiết kế bởi Panbap. Tất cả các quyền được bảo lưu.</p>
+</footer>
+
+<!-- Modal cho album ảnh -->
+<div id="modal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <span class="arrow prev" onclick="changeImage(-1)">&#10094;</span>
+    <span class="arrow next" onclick="changeImage(1)">&#10095;</span>
+    <img class="modal-content" id="modalImage" src="" alt="">
+</div>
+
+<script>
+    // Slider hình ảnh
+    const slides = document.getElementById('slides');
+    const slideCount = slides.children.length;
+    let currentIndex = 0;
+
+    function showNextSlide() {
+        currentIndex = (currentIndex + 1) % slideCount;
+        slides.style.transform = 'translateX(' + (-currentIndex * 100) + '%)';
+    }
+
+    setInterval(showNextSlide, 3000); // Chuyển slide mỗi 3 giây
+
+    // Đếm ngược thời gian
+    const weddingDate = new Date("2024-12-12T15:00:00").getTime();
+    const countdownElement = document.getElementById('countdown');
+
+    setInterval(function() {
+        const now = new Date().getTime();
+        const distance = weddingDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        countdownElement.innerHTML = `Còn ${days} ngày ${hours} giờ ${minutes} phút ${seconds} giây`;
+
+        if (distance < 0) {
+            countdownElement.innerHTML = "Đã đến ngày cưới!";
         }
+    }, 1000);
 
-        window.onload = function() {
-            const brideInfo = document.querySelector('.bride-info');
-            const groomInfo = document.querySelector('.groom-info');
+    // Lời nhắn từ cặp đôi
+    const messages = [
+        "Cảm ơn các bạn đã đến tham dự đám cưới của chúng tôi!",
+        "Chúng tôi rất vui khi được chia sẻ khoảnh khắc này cùng mọi người.",
+        "Hãy cùng nhau tạo nên những kỷ niệm đẹp!",
+        "Xin chúc mọi người sức khỏe và hạnh phúc!"
+    ];
 
-            brideInfo.classList.add('fade-in'); // Thêm lớp cho cô dâu
-            groomInfo.classList.add('fade-in'); // Thêm lớp cho chú rể
+    let index = 0;
 
-            showMessage(); // Hiển thị thông điệp đầu tiên ngay lập tức
-            setInterval(showMessage, 5000); // Hiển thị thông điệp mới mỗi 5 giây
-        };
+    function showMessage() {
+        const messageContainer = document.getElementById('messageContainer');
+        messageContainer.innerText = messages[index];
+        index++;
 
-        function showLargeImage(src) {
-            const largeImageContainer = document.getElementById('largeImage');
-            const fullImage = document.getElementById('fullImage');
-            fullImage.src = src;
-            largeImageContainer.style.display = 'block';
+        if (index === messages.length) {
+            index = 0; // Reset index if it exceeds the length
         }
+    }
 
-        function closeLargeImage() {
-            const largeImageContainer = document.getElementById('largeImage');
-            largeImageContainer.style.display = 'none';
-        }
+    setInterval(showMessage, 3000); // Change message every 3 seconds
 
-        // Hiệu ứng khi cuộn
-        const sections = document.querySelectorAll('header, section');
-        window.addEventListener('scroll', () => {
-            sections.forEach(section => {
-                const rect = section.getBoundingClientRect();
-                if (rect.top < window.innerHeight * 0.8) {
-                    section.classList.add('visible');
-                }
-            });
-        });
-    </script>
+    // Modal mở ảnh
+    let currentImageIndex = 0;
+
+    function openModal(index) {
+        currentImageIndex = index;
+        const modal = document.getElementById("modal");
+        const modalImage = document.getElementById("modalImage");
+        modal.style.display = "flex"; // Hiển thị modal
+        modalImage.src = getImageSrc(currentImageIndex); // Cập nhật nguồn ảnh
+    }
+
+    function closeModal() {
+        const modal = document.getElementById("modal");
+        modal.style.display = "none"; // Ẩn modal
+    }
+
+    function changeImage(direction) {
+        currentImageIndex = (currentImageIndex + direction + 6) % 6; // Cập nhật chỉ số ảnh
+        const modalImage = document.getElementById("modalImage");
+        modalImage.src = getImageSrc(currentImageIndex); // Cập nhật nguồn ảnh
+    }
+
+    function getImageSrc(index) {
+        const images = ['image/a3.jpg', 'image/a4.jpg', 'image/a5.jpg', 'image/a6.jpg', 'image/a7.jpg', 'image/a4.jpg'];
+        return images[index];
+    }
+</script>
 
 </body>
 </html>
